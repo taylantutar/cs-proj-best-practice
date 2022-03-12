@@ -12,7 +12,7 @@ namespace TT.Api.Controllers
         private readonly IConfiguration _config;
         private readonly IPostService postService;
 
-        public PostsController(IConfiguration config , IPostService postService)
+        public PostsController(IConfiguration config, IPostService postService)
         {
             _config = config;
             this.postService = postService;
@@ -23,8 +23,9 @@ namespace TT.Api.Controllers
             return _config["Str"].ToString();
         }
 
+        [ResponseCache(Duration = 60)]
         [HttpGet("{id}")]
-        public  PostDto GetById(int id)
+        public PostDto GetById(int id)
         {
             return postService.GetById(id);
         }
@@ -32,7 +33,7 @@ namespace TT.Api.Controllers
         [HttpPost]
         public IActionResult Create(PostDto postDto)
         {
-            return Created("",new object());
+            return Created("", new object());
         }
     }
 }

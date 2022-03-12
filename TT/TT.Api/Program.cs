@@ -66,6 +66,8 @@ app.UseHealthChecks("/api/healthcheck", new Microsoft.AspNetCore.Diagnostics.Hea
 });
 
 
+app.UseResponseCaching();   
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
