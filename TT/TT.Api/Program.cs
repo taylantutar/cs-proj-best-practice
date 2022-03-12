@@ -3,15 +3,16 @@ using AutoMapper;
 using TT.Api.Mapping;
 using TT.Api.Service;
 
+//configuration by env 
+//************************************************************************************************
 string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
-
 var Configuration = new ConfigurationBuilder()
                 .SetBasePath(System.IO.Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false)
                 .AddJsonFile($"appsettings.{env}.json", optional: true)
                 .AddEnvironmentVariables()
                 .Build();
-
+//************************************************************************************************
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +23,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-//
+//************************************************************************************************
+// DI
 builder.Services.AddScoped<IPostService, PostService>();
 
 // add healthcheck service
@@ -34,9 +36,8 @@ builder.Configuration.AddConfiguration(Configuration);
 //auto mapping
 var mappingConfig = new MapperConfiguration(m => m.AddProfile(new AutoMappingProfile()));
 IMapper mapper = mappingConfig.CreateMapper();
-builder.Services.AddSingleton(mapper);  
-
-
+builder.Services.AddSingleton(mapper);
+//************************************************************************************************
 
 
 
@@ -50,6 +51,8 @@ if (app.Environment.IsDevelopment())
 }
 
 
+//healthCheck
+//************************************************************************************************
 app.UseHealthChecks("/api/healthcheck", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions()
 {
     ResponseWriter = async (context, report) =>
@@ -57,6 +60,12 @@ app.UseHealthChecks("/api/healthcheck", new Microsoft.AspNetCore.Diagnostics.Hea
         await context.Response.WriteAsync("Ok");
     }
 });
+//************************************************************************************************
+
+
+
+
+
 
 app.UseHttpsRedirection();
 
