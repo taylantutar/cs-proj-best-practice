@@ -28,5 +28,11 @@ namespace TT.Api.Controllers
         {
             return postService.GetById(id);
         }
+
+        [HttpPost]
+        public IActionResult Create(PostDto postDto)
+        {
+            return Created("",new object());
+        }
     }
 }
