@@ -17,8 +17,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+
+// add healthcheck service
+builder.Services.AddHealthChecks(); 
+
 //add configuration
-builder.Configuration.AddConfiguration(Configuration); 
+builder.Configuration.AddConfiguration(Configuration);
+
+
+
 
 var app = builder.Build();
 
@@ -28,6 +36,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
+app.UseHealthChecks("/api/healthcheck", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions()
+{
+    ResponseWriter = async (context, report) =>
+    {
+        await context.Response.WriteAsync("Ok");
+    }
+});
 
 app.UseHttpsRedirection();
 
