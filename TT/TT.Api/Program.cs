@@ -1,4 +1,8 @@
 
+using AutoMapper;
+using TT.Api.Mapping;
+using TT.Api.Service;
+
 string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
 var Configuration = new ConfigurationBuilder()
@@ -18,12 +22,20 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
+//
+builder.Services.AddScoped<IPostService, PostService>();
 
 // add healthcheck service
 builder.Services.AddHealthChecks(); 
 
 //add configuration
 builder.Configuration.AddConfiguration(Configuration);
+
+//auto mapping
+var mappingConfig = new MapperConfiguration(m => m.AddProfile(new AutoMappingProfile()));
+IMapper mapper = mappingConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);  
+
 
 
 

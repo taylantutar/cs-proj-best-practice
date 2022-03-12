@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TT.Api.Data.Model\TT.Api.Data.Model.csproj" />
+    <ProjectReference Include="..\TT.Api.Model\TT.Api.Model.csproj" />
+  </ItemGroup>
+
 </Project>
