@@ -8,6 +8,7 @@ namespace TT.Api.Validations
         public PostValidator()
         {
             RuleFor(x => x.Title).NotEmpty().WithMessage("Başlık boş olamaz");
+            RuleFor(x => x.Content).NotEmpty().WithMessage("İçerik boş olamaz");
         }
     }
 }
