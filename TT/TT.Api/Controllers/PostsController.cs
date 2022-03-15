@@ -11,15 +11,18 @@ namespace TT.Api.Controllers
     {
         private readonly IConfiguration _config;
         private readonly IPostService postService;
+        private readonly ILogger<PostsController> _logger;
 
-        public PostsController(IConfiguration config, IPostService postService)
+        public PostsController(IConfiguration config, IPostService postService, ILogger<PostsController> logger)
         {
             _config = config;
             this.postService = postService;
+            _logger = logger;
         }
 
         public string Get()
         {
+            _logger.LogDebug("Debug log");
             return _config["Str"].ToString();
         }
 

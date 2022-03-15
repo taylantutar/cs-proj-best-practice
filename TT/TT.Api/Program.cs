@@ -45,6 +45,19 @@ builder.Services.AddSingleton(mapper);
 //validation
 builder.Services.AddTransient<IValidator<PostDto>, PostValidator>();
 
+//logging
+builder.Services.AddLogging(x =>
+{
+    x.ClearProviders(); 
+    x.SetMinimumLevel(LogLevel.Debug);
+    x.AddDebug();   
+});
+
+//builder.Host.ConfigureLogging(x => {
+//    x.AddConsole();
+//});
+
+
 
 var app = builder.Build();
 
@@ -66,7 +79,7 @@ app.UseHealthChecks("/api/healthcheck", new Microsoft.AspNetCore.Diagnostics.Hea
 });
 
 
-app.UseResponseCaching();   
+app.UseResponseCaching();
 
 app.UseHttpsRedirection();
 
